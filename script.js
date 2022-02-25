@@ -103,6 +103,7 @@ function stopTimer(){
 //Starting OF CAPTURE
 let transparentColor = "transparent"
 captureBtnCont.addEventListener("click", (e) =>{
+    captureBtn.classList.add("scale-capture");
     let canvas = document.createElement("canvas");
     canvas.width = video.videoWidth; //taking width of video
     canvas.height = video.videoHeight;  //taking height of video
@@ -132,6 +133,7 @@ allFilters.forEach((filterElem) =>{
         filterLayer.style.backgroundColor = transparentColor;
     })
 })
+//Capturing Completed
 
 
 
