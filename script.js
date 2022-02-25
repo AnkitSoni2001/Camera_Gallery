@@ -4,11 +4,12 @@ let recordBtn = document.querySelector(".record-btn");
 let captureBtnCont = document.querySelector(".capture-btn-cont");
 let captureBtn = document.querySelector(".capture-btn");
 
+//Starting OF RECORDER
 let recordFlag = false;
 
 let recorder;
 let chunks = [];  //Media data in chunks
-
+   
 let constrains = {    
     // It is use to create object
     video : true,
@@ -97,6 +98,25 @@ function stopTimer(){
     timer.innerText = "00:00:00";
     timer.style.display = "none";
 }
+//Ending OF RECORDER
+
+//Starting OF CAPTURE
+captureBtnCont.addEventListener("click", (e) =>{
+    let canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth; //taking width of video
+    canvas.height = video.videoHeight;  //taking height of video
+
+    let tool = canvas.getContext("2d");
+    tool.drawImage(video, 0, 0, canvas.width, canvas.height);  //converting video to Image
+
+    let imageURL = canvas.toDataURL();  //Generating imageURL
+
+    let a = document.createElement("a");
+    a.href = imageURL;
+    a.download = "image.jpg";
+    a.click();    
+})  
+
 
 
  
