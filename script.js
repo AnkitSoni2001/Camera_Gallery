@@ -101,6 +101,7 @@ function stopTimer(){
 //Ending OF RECORDER
 
 //Starting OF CAPTURE
+let transparentColor = "transparent"
 captureBtnCont.addEventListener("click", (e) =>{
     let canvas = document.createElement("canvas");
     canvas.width = video.videoWidth; //taking width of video
@@ -108,6 +109,9 @@ captureBtnCont.addEventListener("click", (e) =>{
 
     let tool = canvas.getContext("2d");
     tool.drawImage(video, 0, 0, canvas.width, canvas.height);  //converting video to Image
+    //Filtering
+    tool.fillStyle = transparentColor;
+    tool.fillRect(0, 0, canvas.width, canvas.height);
 
     let imageURL = canvas.toDataURL();  //Generating imageURL
 
@@ -116,6 +120,18 @@ captureBtnCont.addEventListener("click", (e) =>{
     a.download = "image.jpg";
     a.click();    
 })  
+
+// Filtering layer Logic
+let filterLayer = document.querySelector(".filter-layer");
+let allFilters = document.querySelectorAll(".filter");
+allFilters.forEach((filterElem) =>{
+    filterElem.addEventListener("click", (e) =>{
+        //Get Style
+        transparentColor = getComputedStyle(filterElem).getPropertyValue("background-color");
+        //Set Style
+        filterLayer.style.backgroundColor = transparentColor;
+    })
+})
 
 
 
