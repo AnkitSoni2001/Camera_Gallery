@@ -124,6 +124,10 @@ video{
     background-color: #00d9ff;
     background-blend-mode: color-burn;
 }
+.filter:hover {
+    transform:scale(1.1);
+    cursor: pointer;
+}
 .orange{
     background-color: #ffa50052;
 }
@@ -144,4 +148,20 @@ video{
     height: 100vh;
     width: 100vw;
     z-index: 1;
+}
+ 
+/* Gallery */
+.material-icons{
+    color: white;
+    font-size: 3rem;
+}
+
+.gallery{
+    position: absolute;
+    right: 6rem;
+    bottom: 7rem;
+    z-index: 2;
+}
+.gallery:hover{
+    cursor: pointer;
 }

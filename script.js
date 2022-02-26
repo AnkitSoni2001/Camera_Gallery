@@ -36,13 +36,25 @@ navigator.mediaDevices.getUserMedia(constrains)
         //Conversion of media chunks data to video
         let blob = new Blob(chunks, {type: "video/mp4"});
 
-        //Creating video link(URL)
-        let videoURL = URL.createObjectURL(blob);
+        //Transactoin for Video
+        if(db){
+            let videoID = shortid();
+            let dbTransaction = db.transaction("video", "readwrite");
+            let videoStore = dbTransaction.objectStore("video");
+            let videoEntry = {
+                id: `vid-${videoID}`,
+                blobData: blob
+            }
+            videoStore.add(videoEntry);
+        }
 
-        let a = document.createElement("a");
-        a.href = videoURL;
-        a.download = "stream.mp4";
-        a.click();
+        //Creating video link(URL)
+        // let videoURL = URL.createObjectURL(blob);
+
+        // let a = document.createElement("a");
+        // a.href = videoURL;
+        // a.download = "stream.mp4";
+        // a.click();
     }) 
 })
 
@@ -103,6 +115,7 @@ function stopTimer(){
 //Starting OF CAPTURE
 let transparentColor = "transparent"
 captureBtnCont.addEventListener("click", (e) =>{
+
     captureBtn.classList.add("scale-capture");
     let canvas = document.createElement("canvas");
     canvas.width = video.videoWidth; //taking width of video
@@ -116,10 +129,25 @@ captureBtnCont.addEventListener("click", (e) =>{
 
     let imageURL = canvas.toDataURL();  //Generating imageURL
 
-    let a = document.createElement("a");
-    a.href = imageURL;
-    a.download = "image.jpg";
-    a.click();    
+    //Transactoin for image
+    if(db){
+        let imageID = shortid();
+        let dbTransaction = db.transaction("image", "readwrite");
+        let imageStore = dbTransaction.objectStore("image");
+        let imageEntry = {
+            id: `img-${imageID}`,
+            url: imageURL
+        }
+        imageStore.add(imageEntry);
+    }
+
+    // let a = document.createElement("a");
+    // a.href = imageURL;
+    // a.download = "image.jpg";
+    // a.click();
+    setTimeout(() => {
+        captureBtn.classList.remove("scale-capture");
+    }, 500)    
 })  
 
 // Filtering layer Logic
